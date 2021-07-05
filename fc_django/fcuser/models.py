@@ -2,6 +2,8 @@ from django.db import models
 
 # Create your models here.
 
+#
+
 
 class Fcuser(models.Model):
     email = models.EmailField(verbose_name='이메일')
