@@ -13,9 +13,14 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+# from fc_django.fcuser.views import RegisterView
 from django.contrib import admin
 from django.urls import path
+from fcuser.views import index, RegisterView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('',  index),
+    # 클래스의 경우 클래스 명 뒤에 .as_view()를 붙여야 한다. 아니면 오류 발생
+    path('register/', RegisterView.as_view())
 ]
