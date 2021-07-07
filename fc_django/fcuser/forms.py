@@ -1,27 +1,24 @@
 from django import forms
-from django.forms.widgets import PasswordInput
+from django.contrib.auth.hashers import check_password
 from .models import Fcuser
-from django.contrib.auth.hashers import check_password, make_password
 
 
 class RegisterForm(forms.Form):
     email = forms.EmailField(
         error_messages={
-            'required': '이메일을 입력해주세요'
+            'required': '이메일을 입력해주세요.'
         },
         max_length=64, label='이메일'
     )
-
     password = forms.CharField(
         error_messages={
-            'required': '비밀번호를 입력해주세요'
+            'required': '비밀번호를 입력해주세요.'
         },
         widget=forms.PasswordInput, label='비밀번호'
     )
-
     re_password = forms.CharField(
         error_messages={
-            'required': '비밀번호를 입력해주세요'
+            'required': '비밀번호를 입력해주세요.'
         },
         widget=forms.PasswordInput, label='비밀번호 확인'
     )
@@ -34,29 +31,22 @@ class RegisterForm(forms.Form):
 
         if password and re_password:
             if password != re_password:
-                # self.add_error('password', '비밀번호가 서로 다릅니다.')
+                self.add_error('password', '비밀번호가 서로 다릅니다.')
                 self.add_error('re_password', '비밀번호가 서로 다릅니다.')
-            else:
-                fcuser = Fcuser(
-                    email=email,
-                    password=make_password(password)
-                )
-                fcuser.save()
 
 
 class LoginForm(forms.Form):
     email = forms.EmailField(
         error_messages={
-            'required': '이메일을 입력해주세요'
+            'required': '이메일을 입력해주세요.'
         },
         max_length=64, label='이메일'
     )
-
     password = forms.CharField(
         error_messages={
-            'required': '비밀번호를 입력해주세요'
+            'required': '비밀번호를 입력해주세요.'
         },
-        widget=forms.PasswordInput, label='비밀번호'
+        widget=forms.Textarea, label='비밀번호'
     )
 
     def clean(self):
@@ -71,8 +61,5 @@ class LoginForm(forms.Form):
                 self.add_error('email', '아이디가 없습니다')
                 return
 
-            # check_password는 암호화된 db에 있는 값과 입력한 값을 비교해준다.
             if not check_password(password, fcuser.password):
                 self.add_error('password', '비밀번호를 틀렸습니다')
-            else:
-                self.email = fcuser.email
