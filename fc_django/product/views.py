@@ -4,7 +4,6 @@ from django.views.generic.edit import FormView
 from django.utils.decorators import method_decorator
 from rest_framework import generics
 from rest_framework import mixins
-
 from fcuser.decorators import admin_required
 from .models import Product
 from .forms import RegisterForm
