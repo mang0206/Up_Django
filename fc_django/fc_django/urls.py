@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.views.generic.base import View
-from fcuser.views import index, RegisterView, LoginView
+from fcuser.views import index, RegisterView, LoginView, logout
 from product.views import ProductList, ProductCreate, ProductDetail
 from order.views import OrderCreate, OrderList
 
@@ -28,10 +28,10 @@ urlpatterns = [
     # 클래스의 경우 클래스 명 뒤에 .as_view()를 붙여야 한다. 아니면 오류 발생
     path('register/', RegisterView.as_view()),
     path('login/', LoginView.as_view()),
+    path('logout/', logout),
     path('product/', ProductList.as_view()),
     path('product/<int:pk>/', ProductDetail.as_view()),
     path('product/create/', ProductCreate.as_view()),
     path('order/', OrderList.as_view()),
     path('order/create/', OrderCreate.as_view()),
-
 ]
