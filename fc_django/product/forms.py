@@ -3,6 +3,7 @@ from .models import Product
 
 
 class RegisterForm(forms.Form):
+
     name = forms.CharField(
         error_messages={
             'required': '상품명을 입력해주세요'
